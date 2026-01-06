@@ -1,0 +1,125 @@
+/* Custom Django Admin Styles for Project Content */
+
+/* Fix inline layout */
+.inline-group {
+    margin-bottom: 20px;
+}
+
+/* Better spacing for stacked inlines */
+.inline-related {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Fix CKEditor in inline */
+.inline-related .django-ckeditor-widget {
+    width: 100% !important;
+}
+
+/* Better field layout */
+.inline-related .form-row {
+    margin-bottom: 15px;
+}
+
+.inline-related .form-row label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Fix textarea width */
+.inline-related textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Fix input width */
+.inline-related input[type="text"],
+.inline-related input[type="number"],
+.inline-related select {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Better delete checkbox position */
+.inline-related .delete {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+/* Add some color to headers */
+.inline-group h2 {
+    background: #417690;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Better fieldset styling */
+.inline-related fieldset {
+    border: none;
+    padding: 0;
+}
+
+/* Collapsed fieldsets */
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+}
+
+/* Add button styling */
+.inline-group .add-row {
+    background: #417690;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.inline-group .add-row:hover {
+    background: #2e5266;
+}
+
+/* Fix file upload button */
+.inline-related input[type="file"] {
+    padding: 5px;
+}
+
+/* Better spacing for content type selector */
+.field-content_type select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Order field */
+.field-order input {
+    width: 100px !important;
+}
+
+/* Responsive CKEditor */
+.cke {
+    width: 100% !important;
+}
+
+.cke_inner {
+    width: 100% !important;
+}
+
+/* Fix image preview in admin */
+.inline-related img {
+    max-width: 200px;
+    margin-top: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

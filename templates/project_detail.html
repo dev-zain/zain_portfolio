@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Zain Ali{% endblock %}
+
+{% block content %}
+<section class="project-detail">
+    <div class="container">
+        <!-- Project Header -->
+        <div class="project-header">
+            <a href="{% url 'projects' %}" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+            <h1 class="project-title">{{ project.title }}</h1>
+            <p class="project-description">{{ project.short_description }}</p>
+            
+            <div class="project-meta">
+                <div class="project-tech">
+                    {% for tech in project.get_technologies_list %}
+                    <span class="tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+                <div class="project-actions">
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                    {% endif %}
+                    {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Image -->
+        <div class="project-featured-image">
+            <img src="{{ project.featured_image.url }}" alt="{{ project.title }}">
+        </div>
+
+        <!-- Project Content Blocks -->
+        <div class="project-content">
+            {% for block in content_blocks %}
+                {% if block.content_type == 'text' %}
+                    <div class="content-block text-block">
+                        {{ block.text_content|safe }}
+                    </div>
+                
+                {% elif block.content_type == 'image' %}
+                    <div class="content-block image-block">
+                        <img src="{{ block.image.url }}" alt="{{ block.image_caption }}">
+                        {% if block.image_caption %}
+                        <p class="image-caption">{{ block.image_caption }}</p>
+                        {% endif %}
+                    </div>
+                
+                {% elif block.content_type == 'quote' %}
+                    <div class="content-block quote-block">
+                        <blockquote>
+                            <p>{{ block.quote_text }}</p>
+                            {% if block.quote_author %}
+                            <cite>— {{ block.quote_author }}</cite>
+                            {% endif %}
+                        </blockquote>
+                    </div>
+                
+                {% elif block.content_type == 'code' %}
+                    <div class="content-block code-block">
+                        <pre><code class="language-{{ block.code_language }}">{{ block.code_content }}</code></pre>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Project Footer -->
+        <div class="project-footer">
+            <p class="project-date">Created: {{ project.created_at|date:"F d, Y" }}</p>
+            <p class="project-date">Last Updated: {{ project.updated_at|date:"F d, Y" }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
