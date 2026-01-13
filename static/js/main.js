@@ -1,189 +1,355 @@
-// ==========================================
-// ZAIN ALI PORTFOLIO - JAVASCRIPT
-// ==========================================
+// ========================================
+// PORTFOLIO WEBSITE - JAVASCRIPT
+// ======================================== 
 
-// Dark Mode Toggle
-const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
+// ========================================
+// THEME MANAGEMENT
+// ========================================
 
-// Get saved theme or default to dark
-const currentTheme = localStorage.getItem('theme') || 'dark';
+class ThemeManager {
+  constructor() {
+    // Default to dark theme
+    this.theme = localStorage.getItem('theme') || 'dark';
+    this.toggleBtn = document.getElementById('themeToggle');
+    this.init();
+  }
 
-// Apply saved theme
-if (currentTheme === 'dark') {
-    body.classList.add('dark-mode');
-    if (themeToggle) {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  init() {
+    this.applyTheme();
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    if (this.toggleBtn) {
+      this.toggleBtn.addEventListener('click', () => this.toggle());
     }
+  }
+
+  applyTheme() {
+    document.documentElement.setAttribute('data-theme', this.theme);
+    if (this.toggleBtn) {
+      const icon = this.toggleBtn.querySelector('i');
+      if (icon) {
+        icon.className = this.theme === 'dark' ?  'fas fa-sun' : 'fas fa-moon';
+      }
+    }
+  }
+
+  toggle() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    localStorage.setItem('theme', this.theme);
+    this.applyTheme();
+  }
 }
 
-// Toggle theme on click
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
-        
-        // Update icon
-        themeToggle.innerHTML = theme === 'dark' 
-            ? '<i class="fas fa-sun"></i>' 
-            : '<i class="fas fa-moon"></i>';
+// ========================================
+// NAVIGATION MANAGEMENT
+// ========================================
+
+class NavManager {
+  constructor() {
+    this.hamburger = document.getElementById('hamburger');
+    this.navMenu = document.getElementById('navMenu');
+    this.navLinks = document.querySelectorAll('.nav-link');
+    this.init();
+  }
+
+  init() {
+    if (this.hamburger) {
+      this.hamburger.addEventListener('click', () => this.toggleMenu());
+    }
+
+    this.navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.closeMenu();
+        this.updateActiveLink();
+      });
     });
+
+    window.addEventListener('scroll', () => this.updateActiveLink());
+  }
+
+  toggleMenu() {
+    this.hamburger.classList.toggle('active');
+    this.navMenu.classList.toggle('active');
+  }
+
+  closeMenu() {
+    this.hamburger.classList.remove('active');
+    this.navMenu.classList.remove('active');
+  }
+
+  updateActiveLink() {
+    const sections = document.querySelectorAll('section');
+    let current = '';
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    this.navLinks.forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (current && href.includes(current)) {
+        link.classList.add('active');
+      }
+    });
+  }
 }
 
-// Mobile Menu Toggle
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('navMenu');
+// ========================================
+// SCROLL ANIMATIONS
+// ========================================
 
-if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
+class ScrollAnimations {
+  constructor() {
+    this.init();
+  }
 
-    // Close menu when clicking nav links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-        });
-    });
+  init() {
+    const options = {
+      threshold: 0.1,
+      rootMargin:  '0px 0px -100px 0px'
+    };
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+          observer.unobserve(entry.target);
         }
+      });
+    }, options);
+
+    document.querySelectorAll('.skill-item, .project-card, .timeline-item, .contact-item').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
     });
+  }
 }
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offset = 80; // Navbar height
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+// ========================================
+// FORM HANDLING
+// ========================================
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
+class FormHandler {
+  constructor() {
+    this.form = document.querySelector('.contact-form form');
+    this.init();
+  }
+
+  init() {
+    if (this.form) {
+      this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+      this.setupValidation();
+    }
+  }
+
+  setupValidation() {
+    const inputs = this.form.querySelectorAll('input[type="text"], input[type="email"], textarea');
+    inputs.forEach(input => {
+      input.addEventListener('blur', () => this.validateField(input));
+      input.addEventListener('focus', () => this.clearError(input));
+    });
+  }
+
+  validateField(field) {
+    const value = field.value.trim();
+    const fieldType = field.type;
+
+    let isValid = value.length > 0;
+
+    if (fieldType === 'email') {
+      isValid = this.isValidEmail(value);
+    }
+
+    if (! isValid) {
+      field.style.borderColor = '#ff6b6b';
+      field.style.boxShadow = '0 0 0 3px rgba(255, 107, 107, 0.15)';
+    }
+  }
+
+  clearError(field) {
+    field.style.borderColor = '';
+    field.style.boxShadow = '';
+  }
+
+  isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  handleSubmit(e) {
+    // Let Django handle the form submission
+    // This is just for client-side feedback
+  }
+}
+
+// ========================================
+// SKILL ANIMATION
+// ========================================
+
+class SkillAnimation {
+  constructor() {
+    this.skillItems = document.querySelectorAll('.skill-item');
+    this.init();
+  }
+
+  init() {
+    const options = {
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.animateSkill(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    this.skillItems.forEach(item => {
+      observer.observe(item);
+    });
+  }
+
+  animateSkill(item) {
+    const icon = item.querySelector('i');
+    if (icon) {
+      icon.style.animation = 'float 0.6s ease-out forwards';
+    }
+  }
+}
+
+// ========================================
+// CODE HIGHLIGHTING
+// ========================================
+
+class CodeHighlight {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    if (typeof hljs !== 'undefined') {
+      document.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+      });
+    }
+  }
+}
+
+// ========================================
+// SMOOTH SCROLL
+// ========================================
+
+class SmoothScroll {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({
+              behavior:  'smooth',
+              block: 'start'
             });
+          }
         }
+      });
     });
+  }
+}
+
+// ========================================
+// UTILITY FUNCTIONS
+// ========================================
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// ========================================
+// INITIALIZATION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize all components
+  new ThemeManager();
+  new NavManager();
+  new ScrollAnimations();
+  new FormHandler();
+  new SkillAnimation();
+  new CodeHighlight();
+  new SmoothScroll();
+
+  console.log('✨ Portfolio initialized successfully!');
 });
 
-// Navbar Scroll Effect
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
+// ========================================
+// HANDLE RESPONSIVE ADJUSTMENTS
+// ========================================
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+const handleResize = debounce(() => {
+  // Recalculate any responsive values if needed
+}, 250);
+
+window.addEventListener('resize', handleResize);
+
+// ========================================
+// ACCESSIBILITY ENHANCEMENTS
+// ========================================
+
+// Add keyboard navigation support
+document.addEventListener('keydown', (e) => {
+  // ESC to close mobile menu
+  if (e.key === 'Escape') {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    if (hamburger && navMenu) {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
     }
-    
-    lastScroll = currentScroll;
+  }
 });
 
-// Skill Progress Animation
-const observeSkills = () => {
-    const skillCards = document.querySelectorAll('.skill-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target.querySelector('.progress-fill');
-                if (progressBar) {
-                    const width = progressBar.style.width;
-                    progressBar.style.width = '0';
-                    setTimeout(() => {
-                        progressBar.style.width = width;
-                    }, 100);
-                }
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    skillCards.forEach(card => observer.observe(card));
-};
+// ========================================
+// PERFORMANCE OPTIMIZATION
+// ========================================
 
-// Initialize skill animations
-if (document.querySelector('.skill-card')) {
-    observeSkills();
-}
-
-// Scroll Animations
-const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.project-card, .timeline-item, .skill-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    elements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
+// Lazy load images if supported
+if ('IntersectionObserver' in window) {
+  const images = document.querySelectorAll('img[data-src]');
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        imageObserver.unobserve(img);
+      }
     });
-};
+  });
 
-// Initialize scroll animations when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', animateOnScroll);
-} else {
-    animateOnScroll();
+  images.forEach(img => imageObserver.observe(img));
 }
-
-// Form Validation
-const contactForm = document.querySelector('.contact-form form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        const inputs = this.querySelectorAll('.form-input');
-        let isValid = true;
-        
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                isValid = false;
-                input.style.borderColor = '#ef4444';
-            } else {
-                input.style.borderColor = 'var(--border-color)';
-            }
-        });
-        
-        if (!isValid) {
-            e.preventDefault();
-            alert('Please fill in all fields');
-        }
-    });
-}
-
-// Syntax Highlighting
-if (typeof hljs !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
-    });
-}
-
-// Console Message
-console.log('%c✨ Portfolio by Zain Ali', 'color: #6366f1; font-size: 20px; font-weight: bold;');
-console.log('%cDjango Developer | Software Engineering Student', 'color: #8b5cf6; font-size: 14px;');

@@ -10,24 +10,38 @@
                 <h1 class="hero-title">
                     Hi, I'm <span class="gradient-text">{{ profile.name }}</span>
                 </h1>
-                <h2 class="hero-subtitle">{{ profile.title }}</h2>
+                
+                <div class="hero-roles">
+                    <div class="hero-role">
+                        <div class="role-label">{{ profile.title }}</div>
+                        <div class="role-title">Developer</div>
+                        <p class="role-description">Building elegant and efficient web solutions with modern technologies.</p>
+                    </div>
+                    <div class="hero-role">
+                        <div class="role-label">Problem Solver</div>
+                        <div class="role-title">Engineer</div>
+                        <p class="role-description">Turning complex challenges into simple, beautiful, and intuitive solutions.</p>
+                    </div>
+                </div>
                 
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="#projects" class="btn btn-secondary">View Projects</a>
+                    <a href="{% url 'projects' %}" class="btn btn-secondary">View Projects</a>
                     {% if profile.cv %}
                     <a href="{{ profile.cv.url }}" class="btn btn-outline" download>Download CV</a>
                     {% endif %}
                 </div>
             </div>
             <div class="hero-image">
-                {% if profile.profile_image %}
-                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
-                {% else %}
-                <div class="placeholder-image">
-                    <i class="fas fa-user"></i>
+                <div class="hero-image-wrapper">
+                    {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+                    {% else %}
+                    <div class="placeholder-image">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -55,15 +69,13 @@
             <h3 class="skill-category-title">{{ category|title }}</h3>
             <div class="skills-grid">
                 {% for skill in category_skills %}
-                <div class="skill-card">
+                <div class="skill-item">
                     {% if skill.icon %}
-                    <i class="{{ skill.icon }} skill-icon"></i>
+                    <i class="{{ skill.icon }}"></i>
+                    {% else %}
+                    <i class="fas fa-code"></i>
                     {% endif %}
-                    <h4>{{ skill.name }}</h4>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ skill.proficiency }}%"></div>
-                    </div>
-                    <span class="proficiency">{{ skill.proficiency }}%</span>
+                    <span>{{ skill.name }}</span>
                 </div>
                 {% endfor %}
             </div>
@@ -98,7 +110,7 @@
                         <a href="{{ project.github_url }}" target="_blank"><i class="fab fa-github"></i> Code</a>
                         {% endif %}
                         {% if project.live_url %}
-                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
                         {% endif %}
                     </div>
                 </div>
@@ -171,7 +183,7 @@
         <div class="contact-content">
             <div class="contact-info">
                 <h3>Let's work together!</h3>
-                <p>I'm always open to discussing new projects, creative ideas, or opportunities.</p>
+                <p>I'm always open to discussing new projects, creative ideas, or opportunities. </p>
                 {% if profile.email %}
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>

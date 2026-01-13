@@ -34,13 +34,13 @@
                         <a href="{{ project.github_url }}" target="_blank"><i class="fab fa-github"></i> Code</a>
                         {% endif %}
                         {% if project.live_url %}
-                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
             {% empty %}
-            <p class="no-projects">No projects yet. Check back soon!</p>
+            <p class="no-projects">No projects yet.  Check back soon!</p>
             {% endfor %}
         </div>
     </div>
