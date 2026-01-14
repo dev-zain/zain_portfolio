@@ -11,25 +11,28 @@
                 <h1 class="hero-title">
                     Hi, I'm <span class="gradient-text">{{ profile.name }}</span>
                 </h1>
-                
+
                 <div class="hero-roles">
                     <div class="hero-role">
                         <div class="role-label">{{ profile.title }}</div>
                         <div class="role-title">Developer</div>
-                        <p class="role-description">Building elegant and efficient web solutions with modern technologies.</p>
+                        <p class="role-description">Building elegant and efficient web solutions with modern
+                            technologies.</p>
                     </div>
                     <div class="hero-role">
                         <div class="role-label">Problem Solver</div>
                         <div class="role-title">Engineer</div>
-                        <p class="role-description">Turning complex challenges into simple, beautiful, and intuitive solutions.</p>
+                        <p class="role-description">Turning complex challenges into simple, beautiful, and intuitive
+                            solutions.</p>
                     </div>
                 </div>
-                
+
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
                     <a href="{% url 'projects' %}" class="btn btn-secondary">View Projects</a>
-                    {% if profile.cv %}
-                    <a href="{{ profile.cv|cloudinary_pdf_url }}" class="btn btn-outline" download>Download CV</a>
+                    {% if profile.cv_url %}
+                    <a href="{{ profile.cv_url }}" class="btn btn-outline" target="_blank" rel="noopener">Download
+                        CV</a>
                     {% endif %}
                 </div>
             </div>
@@ -111,7 +114,8 @@
                         <a href="{{ project.github_url }}" target="_blank"><i class="fab fa-github"></i> Code</a>
                         {% endif %}
                         {% if project.live_url %}
-                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
+                        <a href="{{ project.live_url }}" target="_blank"><i class="fas fa-external-link-alt"></i>
+                            Live</a>
                         {% endif %}
                     </div>
                 </div>
@@ -137,7 +141,7 @@
                     <h3>{{ edu.degree }}</h3>
                     <h4>{{ edu.institution }}</h4>
                     <p class="timeline-date">
-                        {{ edu.start_date|date:"Y" }} - 
+                        {{ edu.start_date|date:"Y" }} -
                         {% if edu.is_current %}Present{% else %}{{ edu.end_date|date:"Y" }}{% endif %}
                     </p>
                     <p>{{ edu.field_of_study }}</p>
@@ -165,7 +169,7 @@
                     <h3>{{ exp.title }}</h3>
                     <h4>{{ exp.company }}{% if exp.location %} - {{ exp.location }}{% endif %}</h4>
                     <p class="timeline-date">
-                        {{ exp.start_date|date:"M Y" }} - 
+                        {{ exp.start_date|date:"M Y" }} -
                         {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}
                     </p>
                     <p class="timeline-description">{{ exp.description|linebreaks }}</p>
@@ -194,11 +198,11 @@
             </div>
             <div class="contact-form">
                 {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
                 {% endif %}
                 <form method="post" action="{% url 'index' %}#contact">
                     {% csrf_token %}

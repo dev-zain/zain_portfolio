@@ -13,7 +13,7 @@ class Profile(models.Model):
     github = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
-    cv = models.FileField(upload_to='cv/', blank=True, null=True)
+    cv_url = models.URLField(blank=True, help_text="Link to CV (Google Drive, Dropbox, etc.)")
     
     def __str__(self):
         return self.name
