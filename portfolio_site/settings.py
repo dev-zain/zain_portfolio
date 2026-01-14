@@ -163,7 +163,7 @@ CLOUDINARY_STORAGE = {
 
 # Media files - Use Cloudinary in production, local storage in development
 if config('CLOUDINARY_CLOUD_NAME', default=''):
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'portfolio.storage.PublicMediaStorage'
     MEDIA_URL = '/media/'
     # Override upload parameters
     CLOUDINARY_URL = f"cloudinary://{config('CLOUDINARY_API_KEY', default='')}:{config('CLOUDINARY_API_SECRET', default='')}@{config('CLOUDINARY_CLOUD_NAME', default='')}"
