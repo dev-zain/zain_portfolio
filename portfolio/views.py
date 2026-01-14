@@ -1,7 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.http import HttpResponse
+from django.contrib.auth import get_user_model
 from .models import Profile, Skill, Project, Education, Experience, ContactMessage
 from .forms import ContactForm
+
+
+def setup_admin(request):
+    """One-time setup to create superuser"""
+    User = get_user_model()
+    if User.objects.filter(username='devzain').exists():
+        return HttpResponse('<h1>Admin Exists!</h1><p><a href="/admin/">Go to Admin</a></p>')
+    try:
+        User.objects.create_superuser(username='devzain', email='ibrahimkhan35821@gmail.com', password='zain35821')
+        return HttpResponse('<h1>✅ Superuser Created!</h1><p>Username: devzain<br>Password: zain35821</p><p><a href="/admin/">Login Now</a></p>')
+    except Exception as e:
+        return HttpResponse(f'<h1>Error: {e}</h1>')
 
 
 def index(request):
