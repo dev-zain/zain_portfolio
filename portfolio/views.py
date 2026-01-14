@@ -5,17 +5,22 @@ from .forms import ContactForm
 
 
 def create_admin_now(request):
-    """Emergency admin creation - visit /create-admin-now/"""
+    """Emergency admin creation - uses environment variables"""
     from django.http import HttpResponse
     from django.contrib.auth import get_user_model
+    from decouple import config
     User = get_user_model()
     
     try:
-        # Delete existing devzain user if exists
-        User.objects.filter(username='devzain').delete()
+        username = config('ADMIN_USERNAME', default='admin')
+        password = config('ADMIN_PASSWORD', default='changeme123')
+        email = config('ADMIN_EMAIL', default='admin@example.com')
+        
+        # Delete existing user if exists
+        User.objects.filter(username=username).delete()
         # Create new one
-        User.objects.create_superuser(username='devzain', email='ibrahimkhan35821@gmail.com', password='zain35821')
-        return HttpResponse('<h1 style="color:green;">✅ Admin Created!</h1><p>Username: devzain<br>Password: zain35821</p><p><a href="/admin/">Login Now</a></p>')
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse(f'<h1 style="color:green;">✅ Admin Created!</h1><p>Username: {username}</p><p><a href="/admin/">Login Now</a></p><p style="color:red;">Password is from ADMIN_PASSWORD env var</p>')
     except Exception as e:
         return HttpResponse(f'<h1 style="color:red;">Error: {e}</h1>')
 
