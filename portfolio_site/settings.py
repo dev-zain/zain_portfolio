@@ -145,7 +145,8 @@ cloudinary.config(
     cloud_name=config('CLOUDINARY_CLOUD_NAME', default=''),
     api_key=config('CLOUDINARY_API_KEY', default=''),
     api_secret=config('CLOUDINARY_API_SECRET', default=''),
-    secure=True
+    secure=True,
+    api_proxy='https://api.cloudinary.com'
 )
 
 # Cloudinary storage settings
@@ -154,15 +155,18 @@ CLOUDINARY_STORAGE = {
     'API_KEY': config('CLOUDINARY_API_KEY', default=''),
     'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
     'SECURE': True,
-    'RESOURCE_TYPE': 'auto',  # Automatically detect file type
+    'RESOURCE_TYPE': 'auto',
     'TYPE': 'upload',
-    'ACCESS_MODE': 'public',  # Make files publicly accessible
+    'ACCESS_MODE': 'public',  # Force public access
+    'ALLOWED_FORMATS': ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx'],
 }
 
 # Media files - Use Cloudinary in production, local storage in development
 if config('CLOUDINARY_CLOUD_NAME', default=''):
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
     MEDIA_URL = '/media/'
+    # Override upload parameters
+    CLOUDINARY_URL = f"cloudinary://{config('CLOUDINARY_API_KEY', default='')}:{config('CLOUDINARY_API_SECRET', default='')}@{config('CLOUDINARY_CLOUD_NAME', default='')}"
 else:
     # Local development
     MEDIA_URL = '/media/'
