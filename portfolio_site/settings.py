@@ -161,6 +161,8 @@ CKEDITOR_CONFIGS = {
 
 # Security settings for production
 if not DEBUG:
+    # Trust Railway's proxy headers for HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
