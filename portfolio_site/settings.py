@@ -148,9 +148,20 @@ cloudinary.config(
     secure=True
 )
 
+# Cloudinary storage settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
+    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+    'SECURE': True,
+    'RESOURCE_TYPE': 'auto',  # Automatically detect file type
+    'TYPE': 'upload',
+    'ACCESS_MODE': 'public',  # Make files publicly accessible
+}
+
 # Media files - Use Cloudinary in production, local storage in development
 if config('CLOUDINARY_CLOUD_NAME', default=''):
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
     MEDIA_URL = '/media/'
 else:
     # Local development
