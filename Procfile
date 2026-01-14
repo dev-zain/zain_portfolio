@@ -1,1 +1,1 @@
-web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn portfolio_site. wsgi --bind 0.0.0.0:$PORT
+web: sh -c "python create_superuser.py || true && python manage.py migrate && python manage.py collectstatic --no-input && gunicorn portfolio_site.wsgi --log-file -"
