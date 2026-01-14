@@ -1,0 +1,39 @@
+# In Railway, go to your project and add this as a ONE-TIME DEPLOYMENT command
+# Settings -> Deploy -> Add "Run After Deploy" command:
+# python create_superuser.py
+
+# OR manually trigger via Railway's web-based console
+
+# SIMPLIFIED INSTRUCTIONS FOR USER:
+# Since Railway CLI runs locally, you need to use Railway's web interface:
+
+# Option 1: Use Railway's Web Console
+# 1. Go to Railway dashboard
+# 2. Click your service
+# 3. Look for "Console" or "Shell" tab (may be under three dots menu)
+# 4. Type: python create_superuser.py
+# 5. Press Enter
+
+# Option 2: Temporarily modify Procfile to run on startup
+# Add this line to Procfile BEFORE gunicorn:
+# web: sh -c "python create_superuser.py || true && python manage.py migrate && python manage.py collectstatic --no-input && gunicorn portfolio_site.wsgi --log-file -"
+
+# The || true ensures it continues even if user already exists
+
+INSTRUCTIONS = """
+QUICK FIX - Two Options:
+
+Option A: Find Railway Console (Easiest)
+1. Railway Dashboard -> Your Service
+2. Look for: Console / Shell / Terminal icon (>_)
+3. Run: python create_superuser.py
+
+Option B: Auto-run on next deploy
+1. Open Procfile
+2. Add: || python create_superuser.py
+   Before: gunicorn command
+3. Push to GitHub
+4. After deploy, remove it and push again
+"""
+
+print(INSTRUCTIONS)
