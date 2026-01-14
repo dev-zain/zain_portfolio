@@ -53,8 +53,8 @@ class ProfileAdmin(admin.ModelAdmin):
         ('Contact Information', {
             'fields': ('email', 'github', 'linkedin', 'twitter')
         }),
-        ('Documents', {
-            'fields': ('cv',)
+        ('Resume', {
+            'fields': ('cv_url',)
         }),
     )
     
