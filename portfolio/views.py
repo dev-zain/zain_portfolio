@@ -4,6 +4,22 @@ from .models import Profile, Skill, Project, Education, Experience, ContactMessa
 from .forms import ContactForm
 
 
+def create_admin_now(request):
+    """Emergency admin creation - visit /create-admin-now/"""
+    from django.http import HttpResponse
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    
+    try:
+        # Delete existing devzain user if exists
+        User.objects.filter(username='devzain').delete()
+        # Create new one
+        User.objects.create_superuser(username='devzain', email='ibrahimkhan35821@gmail.com', password='zain35821')
+        return HttpResponse('<h1 style="color:green;">✅ Admin Created!</h1><p>Username: devzain<br>Password: zain35821</p><p><a href="/admin/">Login Now</a></p>')
+    except Exception as e:
+        return HttpResponse(f'<h1 style="color:red;">Error: {e}</h1>')
+
+
 def index(request):
     """Homepage view"""
     profile = Profile.objects.first()
