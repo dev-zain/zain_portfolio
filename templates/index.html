@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cloudinary_tags %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -28,7 +29,7 @@
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
                     <a href="{% url 'projects' %}" class="btn btn-secondary">View Projects</a>
                     {% if profile.cv %}
-                    <a href="{{ profile.cv.url }}" class="btn btn-outline" download>Download CV</a>
+                    <a href="{{ profile.cv|cloudinary_pdf_url }}" class="btn btn-outline" download>Download CV</a>
                     {% endif %}
                 </div>
             </div>
