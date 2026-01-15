@@ -5,19 +5,19 @@
 :root {
   /* Primary Colors */
   --primary-color: #0066ff;
-  --secondary-color:  #00d4ff;
+  --secondary-color: #00d4ff;
   --accent-color: #ff6b6b;
   --success-color: #00d084;
-  --warning-color:  #ffa500;
-  
+  --warning-color: #ffa500;
+
   /* Light Mode (Default) */
   --bg-primary: #ffffff;
-  --bg-secondary:  #f8f9ff;
+  --bg-secondary: #f8f9ff;
   --bg-tertiary: #f0f0f5;
   --text-primary: #1a1a2e;
   --text-secondary: #555555;
-  --border-color:  #e0e0e0;
-  
+  --border-color: #e0e0e0;
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
@@ -25,20 +25,20 @@
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
   --spacing-2xl: 4rem;
-  
+
   /* Border Radius */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-  
+
   /* Shadows (lighter for light mode) */
-  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.16);
-  
+
   /* Transitions */
-  --transition-fast:  150ms ease-in-out;
+  --transition-fast: 150ms ease-in-out;
   --transition-normal: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
 }
@@ -46,14 +46,14 @@
 /* Dark Mode Override */
 [data-theme="dark"] {
   --bg-primary: #0a0e27;
-  --bg-secondary:  #1a1f3a;
+  --bg-secondary: #1a1f3a;
   --bg-tertiary: #252d48;
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
-  --border-color:  #404050;
-  
+  --border-color: #404050;
+
   /* Shadows (darker for dark mode) */
-  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
 }
@@ -63,9 +63,9 @@
    ======================================== */
 
 * {
-  margin:  0;
+  margin: 0;
   padding: 0;
-  box-sizing:  border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -80,18 +80,40 @@ body {
   transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.1;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
 }
 
-h1 { font-size: clamp(2. 5rem, 8vw, 4rem); }
-h2 { font-size: clamp(2rem, 6vw, 3rem); }
-h3 { font-size: clamp(1.5rem, 4vw, 2.2rem); }
-h4 { font-size: 1.3rem; }
-h5 { font-size: 1.1rem; }
-h6 { font-size: 1rem; }
+h1 {
+  font-size: clamp(2. 5rem, 8vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+h4 {
+  font-size: 1.3rem;
+}
+
+h5 {
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
 
 p {
   margin-bottom: var(--spacing-md);
@@ -103,7 +125,7 @@ p {
 a {
   color: var(--primary-color);
   text-decoration: none;
-  transition:  color var(--transition-fast);
+  transition: color var(--transition-fast);
 }
 
 a:hover {
@@ -112,7 +134,7 @@ a:hover {
 
 .container {
   max-width: 1200px;
-  margin:  0 auto;
+  margin: 0 auto;
   padding: 0 var(--spacing-lg);
   width: 100%;
 }
@@ -132,14 +154,14 @@ main {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background:  linear-gradient(135deg, #0066ff, #00d4ff);
+  background: linear-gradient(135deg, #0066ff, #00d4ff);
   border: none;
   color: white;
   font-size: 1.25rem;
   cursor: pointer;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
-  z-index: 40;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +193,7 @@ main {
 .navbar .container {
   display: flex;
   justify-content: space-between;
-  align-items:  center;
+  align-items: center;
 }
 
 .logo {
@@ -212,7 +234,7 @@ main {
   content: '';
   position: absolute;
   bottom: 0;
-  left:  0;
+  left: 0;
   width: 0;
   height: 2px;
   background: linear-gradient(90deg, #0066ff, #00d4ff);
@@ -278,7 +300,7 @@ main {
    ======================================== */
 
 .hero {
-  min-height:  calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -295,7 +317,7 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
-  background:  
+  background:
     radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.08) 0%, transparent 50%);
@@ -433,12 +455,12 @@ main {
 }
 
 .hero-scroll a {
-  display:  inline-flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius:  50%;
+  border-radius: 50%;
   border: 2px solid var(--primary-color);
   color: var(--primary-color);
   transition: all var(--transition-normal);
@@ -466,7 +488,7 @@ section {
 }
 
 .section-title::after {
-  content:  '';
+  content: '';
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -493,7 +515,7 @@ section {
 
 .about-content p {
   font-size: 1.1rem;
-  line-height:  1.8;
+  line-height: 1.8;
   color: var(--text-secondary);
 }
 
@@ -599,7 +621,7 @@ section {
 .project-image {
   position: relative;
   width: 100%;
-  height:  250px;
+  height: 250px;
   overflow: hidden;
   background-color: var(--bg-secondary);
 }
@@ -620,12 +642,12 @@ section {
   top: 0;
   left: 0;
   right: 0;
-  bottom:  0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity:  0;
+  opacity: 0;
   transition: opacity var(--transition-normal);
 }
 
@@ -642,7 +664,7 @@ section {
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  font-weight:  600;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -710,7 +732,7 @@ section {
 }
 
 .project-links a:hover {
-  color:  var(--secondary-color);
+  color: var(--secondary-color);
   transform: translateX(4px);
 }
 
@@ -737,7 +759,7 @@ section {
   top: 0;
   bottom: 0;
   width: 2px;
-  background:  linear-gradient(180deg, #0066ff, #00d4ff);
+  background: linear-gradient(180deg, #0066ff, #00d4ff);
 }
 
 .timeline-item {
@@ -774,7 +796,7 @@ section {
   width: 30px;
   height: 30px;
   top: -5px;
-  background:  linear-gradient(135deg, #0066ff, #00d4ff);
+  background: linear-gradient(135deg, #0066ff, #00d4ff);
 }
 
 .timeline-content {
@@ -819,13 +841,13 @@ section {
    ======================================== */
 
 .contact {
-  background:  linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
 
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap:  var(--spacing-2xl);
+  gap: var(--spacing-2xl);
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -893,7 +915,7 @@ input[type="text"],
 input[type="email"],
 textarea {
   width: 100%;
-  padding:  var(--spacing-sm);
+  padding: var(--spacing-sm);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: var(--bg-primary);
@@ -906,8 +928,8 @@ textarea {
 input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus {
-  outline:  none;
-  border-color:  var(--primary-color);
+  outline: none;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
 }
 
@@ -925,7 +947,7 @@ textarea {
 
 .alert-success {
   background-color: rgba(0, 208, 132, 0.15);
-  border:  1px solid #00d084;
+  border: 1px solid #00d084;
   color: #00d084;
 }
 
@@ -945,8 +967,8 @@ textarea {
   justify-content: center;
   gap: 8px;
   padding: 12px 28px;
-  border:  none;
-  border-radius:  var(--radius-md);
+  border: none;
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -956,7 +978,7 @@ textarea {
 }
 
 .btn-primary {
-  background:  linear-gradient(135deg, #0066ff, #00d4ff);
+  background: linear-gradient(135deg, #0066ff, #00d4ff);
   color: white;
   box-shadow: var(--shadow-md);
 }
@@ -983,7 +1005,7 @@ textarea {
 
 .btn-outline {
   background-color: transparent;
-  border:  2px solid var(--primary-color);
+  border: 2px solid var(--primary-color);
   color: var(--primary-color);
 }
 
@@ -1025,7 +1047,7 @@ textarea {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color:  var(--bg-primary);
+  background-color: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1035,7 +1057,7 @@ textarea {
 }
 
 .social-links a:hover {
-  background-color:  var(--primary-color);
+  background-color: var(--primary-color);
   color: white;
   transform: translateY(-4px);
 }
@@ -1099,7 +1121,7 @@ textarea {
 }
 
 .project-featured-image img {
-  width:  100%;
+  width: 100%;
   height: auto;
   display: block;
 }
@@ -1168,7 +1190,7 @@ textarea {
 .code-block pre {
   margin: 0;
   padding: var(--spacing-lg);
-  overflow:  auto;
+  overflow: auto;
 }
 
 .code-block code {
@@ -1206,18 +1228,24 @@ textarea {
    ======================================== */
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20px);
   }
 }
 
 @keyframes bounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -1228,6 +1256,7 @@ textarea {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1239,6 +1268,7 @@ textarea {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1257,14 +1287,14 @@ textarea {
   .nav-menu {
     position: fixed;
     left: -100%;
-    top:  80px;
-    flex-direction:  column;
-    background-color:  var(--bg-primary);
+    top: 80px;
+    flex-direction: column;
+    background-color: var(--bg-primary);
     width: 100%;
     text-align: center;
     transition: 0.3s;
     gap: 0;
-    padding:  var(--spacing-lg) 0;
+    padding: var(--spacing-lg) 0;
     border-bottom: 1px solid var(--border-color);
   }
 
@@ -1334,7 +1364,7 @@ textarea {
   }
 
   .footer .container {
-    flex-direction:  column;
+    flex-direction: column;
     text-align: center;
   }
 
@@ -1346,9 +1376,17 @@ textarea {
 }
 
 @media (max-width: 480px) {
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
 
   .skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
