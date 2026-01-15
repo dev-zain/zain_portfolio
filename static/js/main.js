@@ -8,8 +8,8 @@
 
 class ThemeManager {
   constructor() {
-    // Default to dark theme
-    this.theme = localStorage.getItem('theme') || 'dark';
+    // Default to light theme
+    this.theme = localStorage.getItem('theme') || 'light';
     this.toggleBtn = document.getElementById('themeToggle');
     this.init();
   }
@@ -30,7 +30,8 @@ class ThemeManager {
     if (this.toggleBtn) {
       const icon = this.toggleBtn.querySelector('i');
       if (icon) {
-        icon.className = this.theme === 'dark' ?  'fas fa-sun' : 'fas fa-moon';
+        // Show moon icon in light mode (to switch to dark), sun icon in dark mode (to switch to light)
+        icon.className = this.theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
       }
     }
   }
@@ -113,7 +114,7 @@ class ScrollAnimations {
   init() {
     const options = {
       threshold: 0.1,
-      rootMargin:  '0px 0px -100px 0px'
+      rootMargin: '0px 0px -100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -167,7 +168,7 @@ class FormHandler {
       isValid = this.isValidEmail(value);
     }
 
-    if (! isValid) {
+    if (!isValid) {
       field.style.borderColor = '#ff6b6b';
       field.style.boxShadow = '0 0 0 3px rgba(255, 107, 107, 0.15)';
     }
@@ -263,7 +264,7 @@ class SmoothScroll {
           const target = document.querySelector(href);
           if (target) {
             target.scrollIntoView({
-              behavior:  'smooth',
+              behavior: 'smooth',
               block: 'start'
             });
           }
