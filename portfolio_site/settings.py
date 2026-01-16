@@ -19,12 +19,14 @@ SECRET_KEY = config('SECRET_KEY', default='s3l!1-40qkluzqv(*t$8(ve_n-mjv)-q5&5_4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,.railway.app,.up.railway.app', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,.railway.app,.up.railway.app,.dev-zain.me', cast=Csv())
 
 # Add this for Railway
 CSRF_TRUSTED_ORIGINS = [
     'https://*.railway.app',
     'https://*.up.railway.app',
+    'https://dev-zain.me',
+    'https://www.dev-zain.me',
 ]
 
 
